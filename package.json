@@ -1,0 +1,32 @@
+{
+    "name": "mtr3picker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./app/main.js",
+    "scripts": {
+        
+        "debug": "DB=${npm_config_couchdb} node ./app/main.js",
+        "debug:s1": "DB=${npm_config_couchdb_sofa1} node ./app/main.js",
+        "debug:s2": "DB=${npm_config_couchdb_sofa2} node ./app/main.js",
+        
+        "test": "mocha --ui tdd  test/*.js;exit 0",
+        "push": "couchapp push ./sofaapp/app.js ${npm_config_couchdb}",
+        "push:s2": "couchapp push ./sofaapp/app.js ${npm_config_couchdb_sofa2}",
+        "watch:push": "watch 'npm run push' sofaapp/",
+        "watch:push:s2": "watch 'npm run push:s2' sofaapp/"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "couchapp": "^0.11.0",
+        "moment": "^2.11.0",
+        "request": "^2.67.0"
+    },
+    "devDependencies": {
+        "async": "^1.5.2",
+        "jshint": "^2.9.1-rc2",
+        "mocha": "^2.3.4",
+        "should": "^8.0.2",
+        "watch": "^0.17.1"
+    }
+}
