@@ -47,50 +47,28 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
 
-                <article>
-                    <header>
+                
                         <h1>Angebot hinzufügen</h1>
                         <p>Wählen sie ein Angebot aus der Liste</p>
-                    </header>
-                    <section>
-                        <select class="selectpicker_new">
-                            <option data-icon="glyphicon-star">Ketchup</option>
-                            <option data-content="<span class='label label-success'>Mustard</span>">Mustard</option>
-                            <option>Relish</option>
+                
+                        <select class="selectpicker" id="selectpicker_new" data-live-search="true" title="---">
+                            <option data-link="//localhost:3020/" data-tokens="ketchup">Ketchup</option>
+                            <option data-link="//localhost:3020/" data-tokens="mustard">Mustard</option>
+                            <option data-link="//localhost:3020/" data-tokens="relish">Relish</option>
                         </select>
-                    </section>
-                    <section>
-                        <h2>Oder erstellen sie ein neues</h2>
-                        <p>
-                            <select class="selectpicker_history">
-                                <option>MustardApp1</option>
-                                <option>MustardApp2</option>
-                                <option>KetchupApp1</option>
-                                <option>KetchupApp2</option>
-                                <option>RelishApp1</option>
-                                <option>RelishApp2</option>
-                            </select>
-                        </p>
-                    </section>
-                    <footer>
-                        <h3>article footer h3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-                    </footer>
-                </article>
+                
+                        <div id="wrapper_iframe">
+                            <div id="box1">
+                              
+                                <iframe id="iframe1" src="" frameBorder="0">
+                                    3rd party app
+                                </iframe>                            
+                            </div>         
+                        </div>         
 
-                <aside>
-                    <h3>Diese Angebote sind Live:</h3>
-                    <p></p>
-                </aside>
-
+                
             </div> <!-- #main -->
         </div> <!-- #main-container -->
-
-        <div class="footer-container">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
-        </div>
 
 
         
@@ -103,26 +81,9 @@
 
 
 
-<h1>Angebot hinzufügen</h1>
 
 
+  
 
-<iframe src="//localhost:3020/">
-    3rd party app
-</iframe>
-
-
-<button>
-    speichern
-</button>
-
-
-
-
-<history_details>
-    details eines ausgewählten elements
-</history_details>    
-
-<log server log>
-</log>    
+  
     
