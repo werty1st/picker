@@ -8,6 +8,10 @@
     
 }
 
+a.active img{
+    border: 2px solid #dadada;
+    border-radius: 7px;
+}
 
 html {
     color: #222;

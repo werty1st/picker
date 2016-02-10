@@ -1,5 +1,16 @@
 var socket = io();
 var meme;
+var selecteditem=false;
+
+var listener = function(event) {
+    //if(event.origin !== 'http://*.zdf.de') return;
+    if (event.data == "ping"){
+        event.source.postMessage("pong",event.origin);        
+    }
+};
+
+// listen to popup response
+window.addEventListener('message', listener, false);
 
 !function init() {    
     $.ajax({
@@ -15,7 +26,15 @@ var meme;
             jQuery.each( memes, function(i,m){
                 var memeitem = $.parseHTML(`<a href="#"><img src="${m.url}"></a>`);
                     $(memeitem).on( "click" , function(e){
+                        
+                        if (selecteditem){
+                            selecteditem.removeClass("active");
+                        }
+                        selecteditem = $(memeitem);
+                        selecteditem.addClass("active");
+                        
                         meme = m;
+                        e.preventDefault();
                     } );                    
                 $( "#memes" ).append( memeitem );
             });
@@ -27,14 +46,12 @@ var meme;
 $('#myButton').on('click', function () {
     var $btn = $(this).button('loading');
     // business logic...
-    save(meme);
-    setTimeout(()=>{
-        $btn.button('reset');    
-    },2000);
-    
+    save(meme,()=>{
+        $btn.button('reset'); 
+    });    
 });
 
-function save(meme){
+function save(meme, cb){
     
     console.log(meme);
     sendPickerData();
