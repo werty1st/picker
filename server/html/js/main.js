@@ -9,39 +9,41 @@ $('.selectpicker').selectpicker({
 });
 
 $('#selectpicker_new').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
-  // do something...
+  
   var selected = $(this).find("option:selected");
-  console.log(clickedIndex,selected.val());
+  
+  //console.log(clickedIndex,selected.val());
   
   
   var link = $(selected).data("link");
-  var target = getPathInfo(link);
+  var location = getPathInfo(link);
   
-  openiframe( target );
-  //openWindow( target );
+  openiframe( location );
+  //openWindow( location );
 });
 
-function openiframe(url){
+function openiframe(location){
     var iframe = $('#iframe1');
     
-    iframe.attr('src', url);
+    iframe.attr('src', location.url);
     $('#box1').animate({
         height: '500px'
     }, 500, function() {
         console.log("open");
         
-    });    
+    });
+    setupMessaging(location, iframe[0].contentWindow);    
 }
 
 
-function setupMessaging(target){
+function setupMessaging(location, targetwindow){
     
     var pingtimer;
     var pongtimer;
-    var myPopup = window.open(target.url,'myWindow');
+
     
     var listener = function(event) {
-        if(event.origin !== target.origin) return;
+        if(event.origin !== location.origin) return;
         if (event.data == "pong"){
             clearTimeout(pongtimer);
         } else{
@@ -61,8 +63,10 @@ function setupMessaging(target){
     // periodical message sender
     pingtimer = setInterval(function(){
         var message = 'ping';
-        myPopup.postMessage(message, target.origin); //send the message and target URI
+        //console.log("ping");
+        targetwindow.postMessage(message, location.origin); //send the message and target URI
         pongtimer = setTimeout(function(){
+            //console.log("pongtimer");
             clearTimeout(pingtimer);   
             clearTimeout(pongtimer);   
             popupClosed();
@@ -73,41 +77,11 @@ function setupMessaging(target){
 }
 
 
-function openWindow(target){
+function openWindow(location){
     
-    var pingtimer;
-    var pongtimer;
-    var myPopup = window.open(target.url,'myWindow');
+    var myPopup = window.open(location.url,'myWindow');
     
-    var listener = function(event) {
-        if(event.origin !== target.origin) return;
-        if (event.data == "pong"){
-            clearTimeout(pongtimer);
-        } else{
-            console.log('received response:  ',event.data);            
-        }
-    };
-    
-    function popupClosed(){
-        console.log("Picker closed");
-        window.removeEventListener('message', listener, false);
-    }
-
-    // listen to popup response
-    window.addEventListener('message', listener, false);
-    //
-
-    // periodical message sender
-    pingtimer = setInterval(function(){
-        var message = 'ping';
-        myPopup.postMessage(message, target.origin); //send the message and target URI
-        pongtimer = setTimeout(function(){
-            clearTimeout(pingtimer);   
-            clearTimeout(pongtimer);   
-            popupClosed();
-        },1000);
-    },1000);
-    
+    setupMessaging(location, myPopup);    
         
 }
 

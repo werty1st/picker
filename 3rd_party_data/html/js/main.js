@@ -13,6 +13,9 @@ var listener = function(event) {
 window.addEventListener('message', listener, false);
 
 !function init() {    
+    
+    //app2 http://version1.api.memegenerator.net/#Generators_Select_ByTrending
+    
     $.ajax({
         url: "https://api.imgflip.com/get_memes",
         context: document.body

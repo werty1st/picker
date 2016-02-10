@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "./app/main.js",
+  "config": {
+      "server": 3010,
+      "client": 3020
+  },
   "scripts": {
-    "debug:server": "PORTS=${npm_config_server} node ./server/server.js",
-    "debug:client": "PORTC=${npm_config_client} node ./3rd_party_data/server.js",
+    "debug:server": "PORTS=${npm_package_config_server} node ./server/server.js",
+    "debug:client": "PORTC=${npm_package_config_client} node ./3rd_party_data/server.js",
     "debug": "npm run debug:server & npm run debug:client",
     
-    "debug:server:watch": "PORTS=${npm_config_server} nodemon ./server/server.js",
-    "debug:client:watch": "PORTC=${npm_config_client} nodemon ./3rd_party_data/server.js",
-    "watch": "PORTS=${npm_config_server} nodemon ./server/server.js & PORTC=${npm_config_client} nodemon ./3rd_party_data/server.js"
+    "debug:server:watch": "PORTS=${npm_package_config_server} nodemon ./server/server.js",
+    "debug:client:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js",
+    "watch": "PORTS=${npm_package_config_server} nodemon ./server/server.js & PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js"
   },
   "author": "",
   "license": "ISC",
