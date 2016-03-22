@@ -7,7 +7,7 @@
     "client": 3020
   },
   "scripts": {
-    "prod:start": "PORTC=${npm_package_config_client} forever start ./3rd_party_data/server.js",
+    "prod": "PORTC=${npm_package_config_client} forever start ./3rd_party_data/server.js",
     "prod:stop": "",
     "debug": "PORTC=${npm_package_config_client} node ./3rd_party_data/server.js",
     "debug:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js"

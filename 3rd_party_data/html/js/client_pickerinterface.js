@@ -29,11 +29,10 @@
 // },5000);
 
 // pickerResult.sendPickerData(fragments, options, function(err){
+//     clearTimeout(timeout);
 //     if(!err){
-//         clearTimeout(timeout);
 //         alert("data saved")
-//     } else {
-//         clearTimeout(timeout);        
+//     } else {        
 //         alert("data not saved. erro:",err);
 //     }
 // });

@@ -24,15 +24,15 @@ function save(meme, $btn){
     var fragments = [
         {
             "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
-            "playout":"web"
+            "playout": "web"
         },
         {
             "fragmentURI": "http://date.jsontest.com",
-            "playout":"json"
+            "playout": "json"
         },
         {
-            "fragmentContent": "<div>Hello</div>",
-            "playout":"html"
+            "fragmentContent": "<div>"+ JSON.stringify(meme) +"</div>",
+            "playout": "xml"
         }
     ]
 
@@ -85,6 +85,8 @@ function save(meme, $btn){
                         }
                         selecteditem = $(memeitem);
                         selecteditem.addClass("active");
+                        
+                        console.re.log('meme selected:',JSON.stringify(m));
                         
                         meme = m;
                         e.preventDefault();
