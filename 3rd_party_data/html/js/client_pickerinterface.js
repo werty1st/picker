@@ -1,45 +1,35 @@
+'use strict';
+
 /** DEMO
  * 
  */
-// var pickerResult= new PickerResultInterface();
+// setTimeout(function () {
+//     // wrapped in timout to keep this at the top of the file
 
-// var fragments = [
-//     {
-//         "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
-//         "playout":"web"
-//     },
-//     {
-//         "fragmentURI": "http://date.jsontest.com",
-//         "playout":"json"
-//     },
-//     {
-//         "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
-//         "playout":"head"
-//     },
-//     {
-//         "fragmentContent": "<root>Hello</root>",
-//         "playout":"xml"
-//     }
-// ]
+//     var pickerResult = new PickerResultInterface(),
 
-// var options = {
-//     "id"          : "3e0e802261d1cc366680040efdaf6ff0b563b4ca",
-//     "visibleFrom" : "2016-03-21T00:00:00+01:00",
-//     "visibleTo"   : "2016-11-24T00:00:00+01:00",
-// };
+//         res = {
+//             "getvars": {}, // will be set automatically in sendResult function
+//             "content": [
+//                 {
+//                     "id"          : "", // an empty String will be replaced with random UUID
+//                     "description" : "Default picker description",
+//                     "visibleFrom" : "2016-03-21T00:00:00+01:00",
+//                     "visibleTo"   : "2016-11-24T00:00:00+01:00",
+//                     "fragments"   : [
+//                         {
+//                             "fragmentURI": "http://zdf.de/module/playout.html",
+//                             "playout": "web"
+//                         }, {
+//                             "fragmentURI": "http://zdf.de/module/playout.xml",
+//                             "playout": "xml"
+//                         }]
+//                 }
+//             ]
+//         };
+//     pickerResult.sendResult(res); // targetOrigin will be set automatically in sendResult function
 
-// var timeout = setTimeout(function(){
-//     alert("data not saved. request timed out");    
-// },5000);
-
-// pickerResult.sendPickerData(fragments, options, function(err){
-//     clearTimeout(timeout);
-//     if(!err){
-//         alert("data saved")
-//     } else {        
-//         alert("data not saved. erro:",err);
-//     }
-// });
+// }, 1000);
 /**
  * DEMO END
  */
@@ -50,61 +40,27 @@
  * @constructor
  * @implements {sendPickerData}
  */
-PickerResultInterface = function PickerResultInterface () {
-    
-    var targetOrigin = "";
+function PickerResultInterface() {
 
-    if (location.search.match(/targetOrigin=([^&]+)/) != null){
-        targetOrigin = location.search.match(/targetOrigin=([^&]+)/)!= null && unescape(location.search.match(/targetOrigin=([^&]+)/)[1]);
-        console.re.log('targetOrigin:',targetOrigin);
+    var targetOrigin = "", query, vars, getvars, i, pair;
+
+    if (location.search.match(/targetOrigin=([^&]+)/) !== null) {
+        targetOrigin = unescape(location.search.match(/targetOrigin=([^&]+)/)[1]);
+        console.re.log('targetOrigin:', targetOrigin);
     }
 
-    if( targetOrigin === "" ){
-        console.re.log('sendPickerData: no targetOrigin');
-        throw new Error("targetOrigin must not be undefined")
+    if (targetOrigin === "") {
+        console.re.log("Parameter targetOrigin is not defined!");
+        throw new PickerResultException("Parameter targetOrigin is not defined!");
     }
-    
 
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    var getvars = {};
+    query = window.location.search.substring(1);
+    vars = query.split("&");
+    getvars = {};
 
-    for (var i=0;i<vars.length;i++) {
-        var pair = vars[i].split("=");
-        getvars[ pair[0] ] = pair[1];
-    }    
-        
-    /**
-     * Sends pickerData to host. 
-     * @param {Array} fragments Array of fragment Objects { playout: "web", fragmentURI: "(https|http)://..."}
-     * @param {Object|null} _options Options to pass with fragments,
-     * @param {Function|null} _callback Callback function gets called after data was transfered to host.
-     */    
-    this.sendPickerData = function (fragments, _options, _callback) {
-        
-        var callback = false;
-        var options = {};
-        
-        if (typeof _callback === 'function') callback = _callback;
-        if (typeof _options  === 'object')    options = _options;
-        
-        //give `options` a default value
-        var content = {
-            "id"          : options.id || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8); return v.toString(16);}),
-            "description" : options.description || "Default picker description",
-            "visibleFrom" : options.visibleFrom || "2011-11-24T00:00:00+01:00",
-            "visibleTo"   : options.visibleTo || "2012-11-24T00:00:00+01:00",
-            "fragments"   : fragments
-        };
-
-        var res = {
-            "getvars": getvars,
-            "content": [
-                content
-            ]
-        };
-
-        sendResult(res, targetOrigin, callback);
+    for (i = 0; i < vars.length; i += 1) {
+        pair = vars[i].split("=");
+        getvars[pair[0]] = pair[1];
     }
 
     /**
@@ -114,42 +70,102 @@ PickerResultInterface = function PickerResultInterface () {
         this.message = message;
         this.name = "pickerResultInterfaceException";
     }
-    
+
+    /**
+    * Generates UUID
+    * @return {String} UUID
+    */
+    function genUUID() {
+        function repl(c) {
+            var r = Math.random() * 16 | 0,
+                v = (c === 'x') ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, repl);
+    }
+
     /**
      * Send PickerResult
      */
-    function sendResult(result, targetOrigin, done) {
+    this.sendResult = function sendResult(result, targetOriginDummy, done) {
 
-        if (targetOrigin == null || targetOrigin.length == 0) {
-            alert("Parameter targetOrigin is not set!");
-            throw new PickerResultException("Parameter targetOrigin is not set!");
-        }
-        if (result == null) {
-            alert("Parameter result is null or undefined!");
+        var resultString, retval = null;
+
+        if (result === null) {
+            console.re.log("Parameter result is null or undefined!");
             throw new PickerResultException("Parameter result is null or undefined!");
         }
-        if (parent == null) {
-            alert("Parent window is null or undefined!");
-            throw new PickerResultException("Parent window is null or undefined!");
-        }
 
-        var resultString = JSON.stringify(result);
-        if (targetOrigin == 'sophora://picker') {
-            
-            // Callback to Java from JavaScript OR false
-            if(done === false){
-                // 2. param = hide sophora dialog [true|false]
-                sendResultToDeskClient(resultString, false);
+        result.getvars = getvars;
+
+        // replace emtpy id with randum UUID
+        result.content.map(function (c) {
+            c.id = (c.id || genUUID());
+        });
+
+        resultString = JSON.stringify(result);
+
+        console.re.log(resultString);
+
+        if (targetOrigin === 'sophora://picker') {
+
+            if (typeof sendResultToDeskClient === 'function') {
+                // sophora is present
+
+                // Callback to Java from JavaScript OR false
+                if (done === false) {
+                    // 2. param = hide sophora dialog [true|false]
+                    sendResultToDeskClient(resultString, false);
+                } else {
+                    retval = sendResultToDeskClient(resultString, true);
+                    done(retval);
+                }
+
             } else {
-                var result = sendResultToDeskClient(resultString, true);
-                done(result);
+                // sophora is missing
+                console.re.log("Page not executed inside Sophora Client.");
+                throw new PickerResultException("Sophora is null or undefined!");
             }
-            
+
         } else {
             parent.postMessage(resultString, targetOrigin);
         }
     };
-    
+
+    /**
+     * Sends pickerData to host. 
+     * @param {Array} fragments Array of fragment Objects { playout: "web", fragmentURI: "(https|http)://..."}
+     * @param {Object|null} _options Options to pass with fragments,
+     * @param {Function|null} _callback Callback function gets called after data was transfered to host.
+     */
+    this.sendPickerData = function (fragments, opt, cb) {
+
+        var callback = false,
+            options = {},
+            content = null,
+            res = null;
+
+        if (typeof cb === 'function') { callback = cb; }
+        if (typeof opt === 'object') { options  = opt; }
+
+        //give `options` a default value
+        content = {
+            "id"          : options.id || genUUID(),
+            "description" : options.description || "Default picker description",
+            "visibleFrom" : options.visibleFrom || "2011-11-24T00:00:00+01:00",
+            "visibleTo"   : options.visibleTo || "2012-11-24T00:00:00+01:00",
+            "fragments"   : fragments
+        };
+
+        res = {
+            "getvars": {}, // will be set in sendResult function
+            "content": [
+                content
+            ]
+        };
+
+        this.sendResult(res, null, callback);
+    };
 }
 
 
