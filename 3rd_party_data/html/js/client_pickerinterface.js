@@ -13,8 +13,12 @@
 //         "playout":"json"
 //     },
 //     {
-//         "fragmentContent": "<div>Hello</div>",
-//         "playout":"html"
+//         "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
+//         "playout":"head"
+//     },
+//     {
+//         "fragmentContent": "<root>Hello</root>",
+//         "playout":"xml"
 //     }
 // ]
 
@@ -78,7 +82,7 @@ PickerResultInterface = function PickerResultInterface () {
      */    
     this.sendPickerData = function (fragments, _options, _callback) {
         
-        var callback = function(){};
+        var callback = false;
         var options = {};
         
         if (typeof _callback === 'function') callback = _callback;
@@ -131,8 +135,16 @@ PickerResultInterface = function PickerResultInterface () {
 
         var resultString = JSON.stringify(result);
         if (targetOrigin == 'sophora://picker') {
-            // Callback to Java from JavaScript
-            sendResultToDeskClient(resultString, done);
+            
+            // Callback to Java from JavaScript OR false
+            if(done === false){
+                // 2. param = hide sophora dialog [true|false]
+                sendResultToDeskClient(resultString, false);
+            } else {
+                var result = sendResultToDeskClient(resultString, true);
+                done(result);
+            }
+            
         } else {
             parent.postMessage(resultString, targetOrigin);
         }

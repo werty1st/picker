@@ -37,7 +37,7 @@ function save(meme, $btn){
     ]
 
     var options = {
-        "id"          : "3e0e802261d1cc366680040efdaf6ff0b563b4ca",
+        "id"          : false, //generate new
         "visibleFrom" : "2016-03-21T00:00:00+01:00",
         "visibleTo"   : "2016-11-24T00:00:00+01:00",
     };
