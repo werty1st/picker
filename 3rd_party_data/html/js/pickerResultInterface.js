@@ -35,12 +35,13 @@
  */
 
 
+
 /**
  * PickerResultInterface class which exposes a sendPickerData function
  * @constructor
  * @implements {sendPickerData}
  */
-function PickerResultInterface() {
+function IPickerResult() {
 
     var targetOrigin = "", query, vars, getvars, i, pair;
 
@@ -137,5 +138,8 @@ function PickerResultInterface() {
     };
 }
 
-
+var PickerResultInterface;
+if (!PickerResultInterface) {
+    PickerResultInterface = new IPickerResult();
+}
 

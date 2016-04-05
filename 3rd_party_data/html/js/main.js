@@ -19,9 +19,7 @@ $('#myButton').on('click', function () {
  */
 function save(meme, $btn){
 
-    var pickerResult = new PickerResultInterface(),
-
-        fragments = [ {
+    var fragments = [ {
             "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
             "playout": "web"
         }, {
@@ -36,10 +34,12 @@ function save(meme, $btn){
             "playout": "head"
         }],
 
-        options = {
+        content = {
             "id"          : false, //generate new
+            "description" : "Beschreibungstext1",
             "visibleFrom" : "2016-03-21T00:00:00+01:00",
             "visibleTo"   : "2016-11-24T00:00:00+01:00",
+            "fragments"   : fragments
         },
 
         timeout = setTimeout(function () {
@@ -47,7 +47,7 @@ function save(meme, $btn){
             console.re.log("data not saved. request timed out");
         }, 2000);
 
-    pickerResult.sendPickerData(fragments, options, function (err) {
+    pickerResult.sendResult(content, function (err) {
         clearTimeout(timeout);
         $btn.button('reset');
 
