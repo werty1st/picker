@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="//console.re/connector.js" data-channel="adams_picker_2016_03_22_12_20" id="consolerescript"></script>
-
         <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
         
         <!-- Latest compiled and minified CSS -->
@@ -20,21 +19,41 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>        
-        
-
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" async></script>
     </head>
-    <body style="background:black; height:500px">
+    <body style="background:black; height:500px; padding-top: 5px;">
+
+        <div id="notification-center" class="text-center"></div>
 
         <div class="text-center"> 
-            <button type="button" id="myButton" data-loading-text="Speichere..." class="btn btn-primary" autocomplete="off">Speichern</button>
+            <button type="button" id="myButton" data-loading-text="Saving... Please wait." class="btn btn-primary" autocomplete="off" disabled>Save</button>
         </div>
 
         <div id="memes">
         </div>
+        
+        <script>
+            /**
+             * dynamically load full or minified version
+             */
+            (function(){
+                if (location.search.match(/debugging=([^&]+)/) !== null) {
+                    var debugging = unescape(location.search.match(/debugging=([^&]+)/)[1]);
+                    console.re.log('debugging:', debugging);
+                }
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="js/pickerResultInterface.min.js"></script>
+                var s = document.createElement('script');
+                if (debugging === "true"){
+                    s.setAttribute('src','js/pickerResultInterface.js');
+                }
+                else{
+                    s.setAttribute('src','js/pickerResultInterface.min.js');
+                }
+                    
+                document.head.appendChild(s);
+            }());
+        </script>
+
         <script src="js/main.js"></script>
     </body>
 </html>

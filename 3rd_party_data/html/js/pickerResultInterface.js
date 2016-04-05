@@ -1,3 +1,4 @@
+// Version 2016-04-05-1141
 'use strict';
 
 /** DEMO
@@ -136,6 +137,8 @@ function IPickerResult() {
             parent.postMessage(resultString, targetOrigin);
         }
     };
+    
+    if (typeof pickerready === 'function') pickerready();
 }
 
 var PickerResultInterface;
