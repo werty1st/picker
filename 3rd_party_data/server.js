@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 
 const PORT = process.env.PORTC;
 
-app.use(express.static(__dirname + '/html'));
+app.use(express.static(__dirname + '/htdocs'));
 
 io.on('connection', function(socket){
   console.log('a user has connected');
