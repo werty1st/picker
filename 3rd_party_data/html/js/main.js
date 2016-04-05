@@ -41,13 +41,17 @@ function save(meme, $btn){
             "visibleTo"   : "2016-11-24T00:00:00+01:00",
             "fragments"   : fragments
         },
+        
+        res = {
+            content: content
+        }
 
         timeout = setTimeout(function () {
             $btn.button('reset');
             console.re.log("data not saved. request timed out");
         }, 2000);
 
-    PickerResultInterface.sendResult(content, function (err) {
+    PickerResultInterface.sendResult(res, function (err) {
         clearTimeout(timeout);
         $btn.button('reset');
 
