@@ -43,7 +43,7 @@ function save(meme, $btn){
         },
         
         res = {
-            content: content
+            content: [content]
         }
 
         timeout = setTimeout(function () {
