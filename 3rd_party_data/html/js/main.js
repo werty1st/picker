@@ -90,19 +90,26 @@ $( document ).ready(function() {
                 bootstrapAlert("Data not saved. Request timed out.","alert-danger");
             }, 2000);
 
-        PickerResultInterface.sendResult(res, function (err) {
+        try {
+            PickerResultInterface.sendResult(res, function (err) {
+                clearTimeout(timeout);
+                $btn.button('reset');
+
+                if (!err) {
+                    console.re.log("data saved");
+                    bootstrapAlert("Success","alert-success");
+                } else {
+                    bootstrapAlert("Data not saved. Check error log for details.","alert-danger");
+                    console.log("Data not saved. erro:", err);
+                    console.re.log("Data not saved. erro:", err);
+                }
+            });            
+        } catch (error) {
             clearTimeout(timeout);
             $btn.button('reset');
+            bootstrapAlert(error.message, "alert-danger");
+        }
 
-            if (!err) {
-                console.re.log("data saved");
-                bootstrapAlert("Success","alert-success");
-            } else {
-                bootstrapAlert("Data not saved. Check error log for details.","alert-danger");
-                console.log("Data not saved. erro:", err);
-                console.re.log("Data not saved. erro:", err);
-            }
-        });
 
     }
 

@@ -130,7 +130,7 @@ function IPickerResult() {
             } else {
                 // sophora is missing
                 console.re.log("Page not executed inside Sophora Client.");
-                throw new PickerResultException("Sophora is null or undefined!");
+                throw new PickerResultException("Page not executed inside Sophora Client.");
             }
 
         } else {
