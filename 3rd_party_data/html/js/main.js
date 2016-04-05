@@ -47,7 +47,7 @@ function save(meme, $btn){
             console.re.log("data not saved. request timed out");
         }, 2000);
 
-    pickerResult.sendResult(content, function (err) {
+    PickerResultInterface.sendResult(content, function (err) {
         clearTimeout(timeout);
         $btn.button('reset');
 
