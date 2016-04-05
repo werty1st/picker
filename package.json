@@ -11,8 +11,8 @@
     "prod:stop": "",
     "debug": "PORTC=${npm_package_config_client} node ./3rd_party_data/server.js",
     "debug:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js",
-    "build": "uglifyjs -cb --screw-ie8 --pure-funcs='console.re.log' --source-map-url js/pickerResultInterface.min.js.map --source-map 3rd_party_data/html/js/pickerResultInterface.min.js.map -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js",
-    "build:min": "uglifyjs -cm --screw-ie8 --pure-funcs='console.re.log' --source-map-url js/pickerResultInterface.min.js.map --source-map 3rd_party_data/html/js/pickerResultInterface.min.js.map -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js"
+    "build": "uglifyjs -cb --screw-ie8 --pure-funcs='console.re.log' --source-map-url pickerResultInterface.min.js.map --source-map 3rd_party_data/html/js/pickerResultInterface.min.js.map -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js",
+    "build:min": "uglifyjs -cm --screw-ie8 --pure-funcs='console.re.log' --source-map-url pickerResultInterface.min.js.map --source-map 3rd_party_data/html/js/pickerResultInterface.min.js.map -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js"
   },
   "author": "",
   "license": "ISC",
