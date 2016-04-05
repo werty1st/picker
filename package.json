@@ -10,13 +10,16 @@
     "prod": "PORTC=${npm_package_config_client} forever start ./3rd_party_data/server.js",
     "prod:stop": "",
     "debug": "PORTC=${npm_package_config_client} node ./3rd_party_data/server.js",
-    "debug:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js"
+    "debug:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js",
+    "build": "uglifyjs -cm --screw-ie8 --pure-funcs='console.re.log' -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js",
+    "build:min": "uglifyjs -cb--screw-ie8 --pure-funcs='console.re.log' -o 3rd_party_data/html/js/pickerResultInterface.min.js -- 3rd_party_data/html/js/pickerResultInterface.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "uglify-js": "^2.6.2"
   },
   "devDependencies": {
     "forever": "^0.15.1",

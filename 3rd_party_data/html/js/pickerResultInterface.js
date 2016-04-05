@@ -85,9 +85,11 @@ function PickerResultInterface() {
     }
 
     /**
-     * Send PickerResult
+     * Send picker data to host. 
+     * @param {Array} content Array with fragment Objects
+     * @param {Function|null} _callback Callback function gets called after data was transfered to host.
      */
-    this.sendResult = function sendResult(result, targetOriginDummy, done) {
+    this.sendResult = function sendResult(result, done) {
 
         var resultString, retval = null;
 
@@ -95,6 +97,8 @@ function PickerResultInterface() {
             console.re.log("Parameter result is null or undefined!");
             throw new PickerResultException("Parameter result is null or undefined!");
         }
+        
+        if (typeof done !== 'function') { done = false; }
 
         result.getvars = getvars;
 
@@ -130,41 +134,6 @@ function PickerResultInterface() {
         } else {
             parent.postMessage(resultString, targetOrigin);
         }
-    };
-
-    /**
-     * Sends pickerData to host. 
-     * @param {Array} fragments Array of fragment Objects { playout: "web", fragmentURI: "(https|http)://..."}
-     * @param {Object|null} _options Options to pass with fragments,
-     * @param {Function|null} _callback Callback function gets called after data was transfered to host.
-     */
-    this.sendPickerData = function (fragments, opt, cb) {
-
-        var callback = false,
-            options = {},
-            content = null,
-            res = null;
-
-        if (typeof cb === 'function') { callback = cb; }
-        if (typeof opt === 'object') { options  = opt; }
-
-        //give `options` a default value
-        content = {
-            "id"          : options.id || genUUID(),
-            "description" : options.description || "Default picker description",
-            "visibleFrom" : options.visibleFrom || "2011-11-24T00:00:00+01:00",
-            "visibleTo"   : options.visibleTo || "2012-11-24T00:00:00+01:00",
-            "fragments"   : fragments
-        };
-
-        res = {
-            "getvars": {}, // will be set in sendResult function
-            "content": [
-                content
-            ]
-        };
-
-        this.sendResult(res, null, callback);
     };
 }
 
