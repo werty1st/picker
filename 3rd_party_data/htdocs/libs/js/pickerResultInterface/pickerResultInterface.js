@@ -1,4 +1,4 @@
-// Version 2016-04-12-1015
+// Version 2016-04-12-1121
 'use strict';
 
 /** DEMO
@@ -10,6 +10,7 @@
 //     var pickerResult = new PickerResultInterface(),
 
 //         res = {
+//             "noPopup": false,
 //             "getvars": {}, // will be set automatically in sendResult function
 //             "content": [
 //                 {
@@ -29,7 +30,6 @@
 //             ]
 //         };
 //     pickerResult.sendResult(res); // targetOrigin will be set automatically in sendResult function
-
 // }, 1000);
 /**
  * DEMO END
@@ -93,14 +93,18 @@ function IPickerResult() {
      */
     this.sendResult = function sendResult(result, done) {
 
-        var resultString, retval = null;
+        var resultString, noPopup = true, retval = null;
 
         if (result === null) {
             console.re.log("Parameter result is null or undefined!");
             throw new PickerResultException("Parameter result is null or undefined!");
         }
-        
-        if (typeof done !== 'function') { done = false; }
+
+        if (typeof done !== 'function') {
+            noPopup = false;
+            done = function () { return; };
+        }
+
 
         result.getvars = getvars;
 
@@ -109,6 +113,10 @@ function IPickerResult() {
             c.id = (c.id || genUUID());
         });
 
+        // suppress sophora message
+        result.noPopup = noPopup;
+
+        // convert Object to String
         resultString = JSON.stringify(result);
 
         console.re.log(resultString);
@@ -118,14 +126,8 @@ function IPickerResult() {
             if (typeof sendResultToDeskClient === 'function') {
                 // sophora is present
 
-                // Callback to Java from JavaScript OR false
-                if (done === false) {
-                    // 2. param = hide sophora dialog [true|false]
-                    sendResultToDeskClient(resultString, false);
-                } else {
-                    retval = sendResultToDeskClient(resultString, true);
-                    done(retval);
-                }
+                retval = sendResultToDeskClient(resultString);
+                if (done !== false) { done(retval); }
 
             } else {
                 // sophora is missing
@@ -135,11 +137,11 @@ function IPickerResult() {
 
         } else {
             parent.postMessage(resultString, targetOrigin);
-            done();
+            if (done !== false) { done(); }
         }
     };
-    
-    if (typeof pickerready === 'function') pickerready();
+
+    if (typeof pickerready === 'function') { pickerready(); }
 }
 
 var PickerResultInterface;
