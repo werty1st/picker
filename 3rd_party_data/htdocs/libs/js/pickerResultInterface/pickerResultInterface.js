@@ -137,7 +137,7 @@ function IPickerResult() {
 
         } else {
             parent.postMessage(resultString, targetOrigin);
-            if (done !== false) { done(); }
+            done();
         }
     };
 
