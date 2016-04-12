@@ -143,7 +143,8 @@ function IPickerResult() {
 }
 
 var PickerResultInterface;
-if (!PickerResultInterface) {
+if (!(PickerResultInterface instanceof IPickerResult)) {
     PickerResultInterface = new IPickerResult();
+    console.log("PickerResultInterface")
 }
 
