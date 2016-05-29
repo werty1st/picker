@@ -95,7 +95,7 @@ function IPickerResult() {
 
         var resultString, noPopup = true, retval = null;
 
-        if (result === null) {
+        if (typeof result === 'undefined') {
             console.re.log("Parameter result is null or undefined!");
             throw new PickerResultException("Parameter result is null or undefined!");
         }
