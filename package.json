@@ -1,18 +1,17 @@
 {
   "name": "mtr3picker",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "",
   "main": "./3rd_party_data/server.js",
   "config": {
     "client": 3020
   },
   "scripts": {
-    "prod": "PORTC=${npm_package_config_client} forever start ./3rd_party_data/server.js",
-    "prod:stop": "",
+
     "debug": "PORTC=${npm_package_config_client} node ./3rd_party_data/server.js",
     "debug:watch": "PORTC=${npm_package_config_client} nodemon ./3rd_party_data/server.js",
-    "build": "uglifyjs -cb --pure-funcs='console.re.log' -p relative --source-map 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js.map -o 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js -- 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.js",
-    "build:min": "uglifyjs -cm --pure-funcs='console.re.log' -p relative --source-map 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js.map -o 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js -- 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.js"
+    "build": "uglifyjs -c -p relative --source-map 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js.map -o 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface.min.js  -- 3rd_party_data/htdocs/libs/js/pickerResultInterface/pickerResultInterface_debug.js"
+
   },
   "author": "",
   "license": "ISC",
