@@ -28,11 +28,8 @@ RUN chmod -R 777 /usr/share/nginx/html/
 # Debug generated config file
 #docker run -d -p 80:80 --name nginx-proxy -t nginx
 
+# test live
+# sudo docker run --rm -e VIRTUAL_HOST=wmaiz-v-sofa-prod-03.dbc.zdf.de -P -e VIRTUAL_PATH=picker -e VIRTUAL_PATH_TARGET= pickerdemo:1.0
 
-
-
-#Usage
-#docker run --rm -e VIRTUAL_HOST=wmaiz-v-sofa-prod-03.dbc.zdf.de -P -e VIRTUAL_PATH=picker -e VIRTUAL_PATH_TARGET= pickerdemo:1.0
-
-# run
-# docker run -d --name newsflashdb --restart=always -P -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=$COUCHPASS -e VIRTUAL_HOST=wmaiz-v-sofa-prod-03.dbc.zdf.de -e VIRTUAL_PATH=newsflash -e VIRTUAL_PATH_TARGET=newsflash/_design/app/_rewrite couchdb/newsflash:1.0
+# install live
+# sudo docker run -d --name=pickerdemo -e VIRTUAL_HOST=wmaiz-v-sofa-prod-03.dbc.zdf.de -P -e VIRTUAL_PATH=picker -e VIRTUAL_PATH_TARGET= pickerdemo:1.0
