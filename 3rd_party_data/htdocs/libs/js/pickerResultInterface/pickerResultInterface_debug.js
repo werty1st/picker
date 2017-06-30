@@ -46,24 +46,6 @@ function IPickerResult() {
 
     var targetOrigin = "", query, vars, getvars, i, pair, locationEx, forceSSL = "";
 
-    // if (location.search.match(/targetOrigin=([^&]+)/) !== null) {
-    //     targetOrigin = unescape(location.search.match(/targetOrigin=([^&]+)/)[1]);
-    //     if (console.re){
-    //         console.re.log('targetOrigin:', targetOrigin);
-    //     } else {
-    //         console.log('targetOrigin:', targetOrigin);            
-    //     }
-    // }
-    // if (location.hash.match(/targetOrigin=([^&]+)/) !== null) {
-    //     targetOrigin = unescape(location.hash.match(/targetOrigin=([^&]+)/)[1]);
-    //     if (console.re){
-    //         console.re.log('targetOrigin:', targetOrigin);
-    //     } else {
-    //         console.log('targetOrigin:', targetOrigin);            
-    //     }
-    // }
-
-    //short version
     locationEx = location.search + location.hash;
 
     if (locationEx.match(/targetOrigin=([^&]+)/i) !== null) {

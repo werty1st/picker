@@ -39,7 +39,8 @@
             (function(){
                 if (location.search.match(/debugging=([^&]+)/) !== null) {
                     var debugging = unescape(location.search.match(/debugging=([^&]+)/)[1]);
-                    console.re.log('debugging:', debugging);
+                    console.re && console.re.log('debugging:', debugging);
+                    console.log('debugging:', debugging);
                 }
 
                 var s = document.createElement('script');
