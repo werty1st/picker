@@ -33,3 +33,7 @@ RUN chmod -R 777 /usr/share/nginx/html/
 
 # install live
 # sudo docker run -d --name=pickerdemo -e VIRTUAL_HOST=wmaiz-v-sofa-prod-03.dbc.zdf.de -P -e VIRTUAL_PATH=picker -e VIRTUAL_PATH_TARGET= pickerdemo:1.0
+
+
+# install live static port
+# sudo docker run -d --name=pickerdemo -p 4001:80 pickerdemo:1.0
