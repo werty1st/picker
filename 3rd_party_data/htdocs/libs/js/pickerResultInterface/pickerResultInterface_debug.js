@@ -44,7 +44,7 @@
  */
 function IPickerResult() {
 
-    var targetOrigin = "", query, vars, getvars, i, pair, locationEx, forceSSL = "";
+    var targetOrigin = "", query, vars, getvars, i, pair, locationEx, forceSSL = "", extId;
 
     locationEx = location.search + location.hash;
 
@@ -59,6 +59,15 @@ function IPickerResult() {
 
     if (locationEx.match(/forceSSL=([^&]+)/i) !== null) {
         forceSSL = unescape(locationEx.match(/forceSSL=([^&]+)/i)[1]);
+        if (console.re){
+            console.re.log('forceSSL:', forceSSL);
+        } else {
+            console.log('forceSSL:', forceSSL);            
+        }
+    } 
+    
+    if (locationEx.match(/extId=([^&]+)/i) !== null) {
+        extId = unescape(locationEx.match(/extId=([^&]+)/i)[1]);
         if (console.re){
             console.re.log('forceSSL:', forceSSL);
         } else {
@@ -131,9 +140,9 @@ function IPickerResult() {
 
         result.getvars = getvars;
 
-        // replace emtpy id with randum UUID
+        // replace emtpy id with submitted extId and fallback to randum UUID
         result.content.map(function (c) {
-            c.id = (c.id || genUUID());
+            c.id = (c.id || extId || genUUID());
         });
 
         //delete invalid Dates

@@ -9,10 +9,9 @@
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
-
-        <script src="//console.re/connector.js" data-channel="adams_picker_2016_03_22_12_20" id="consolerescript"></script>
-        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
         
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+        <!-- <script src="//console.re/connector.js" data-channel="adams_picker_2016_03_22_12_20" id="consolerescript"></script> -->
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Optional theme -->
@@ -33,28 +32,36 @@
         </div>
         
         <script>
-            /**
-             * dynamically load full or minified version
-             */
-            (function(){
-                if (location.search.match(/debugging=([^&]+)/) !== null) {
-                    var debugging = unescape(location.search.match(/debugging=([^&]+)/)[1]);
-                    console.re && console.re.log('debugging:', debugging);
-                    console.log('debugging:', debugging);
-                }
 
-                var s = document.createElement('script');
-                if (debugging === "true"){
-                    s.setAttribute('src','../libs/js/pickerResultInterface/pickerResultInterface_debug.js');
-                }
-                else{
-                    s.setAttribute('src','../libs/js/pickerResultInterface/pickerResultInterface.min.js');
-                }
-                    
-                document.head.appendChild(s);
-            }());
         </script>
 
         <script src="js/main.js"></script>
+
+        <div>
+            <form id="console-form">
+              <input type="text" id="command">
+              <input type="submit" value="Run Command">
+              <button id="clear" type="button">Clear</button>
+            </form>
+            <hr>
+            <pre id="console"></pre>
+        </div><br/>
+        <script>
+            const consoleElm = document.querySelector('#console');
+            const clearButton = document.querySelector('#clear');
+
+            clearButton.addEventListener('click', function(event){
+                consoleElm.innerHTML = '';
+            });
+
+            const consoleForm = document.querySelector('#console-form');
+            consoleForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const command = event.target.querySelector('#command').value;
+                const value = eval(command);
+                consoleElm.innerHTML += (value === undefined ? 'undefined' : value) + '\n';
+            });
+        </script>
+
     </body>
 </html>

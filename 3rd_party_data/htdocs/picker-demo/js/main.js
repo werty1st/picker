@@ -1,6 +1,6 @@
 
-console.re.log('remote log init');
-console.re.log("location.protocol:", location.protocol);
+console.re && console.re.log('remote log init');
+console.re && console.re.log("location.protocol:", location.protocol);
 
 function bootstrapAlert(message,type){    
 
@@ -37,7 +37,7 @@ $( document ).ready(function() {
     // setup save button
     $('#myButton').on('click', function () {
         var $btn = $(this).button('loading');
-        console.re.log('#myButton clicked');
+        console.re && console.re.log('#myButton clicked');
         
         if (meme === undefined){
             bootstrapAlert("No item selected.","alert-warning");
@@ -53,27 +53,55 @@ $( document ).ready(function() {
 
 
     /**
+     * dynamically load full or minified version 
+     */
+    (function(){
+        if (location.search.match(/debugging=([^&]+)/) !== null) {
+            var debugging = unescape(location.search.match(/debugging=([^&]+)/)[1]);
+            console.re && console.re.log('debugging:', debugging);
+            console.log('debugging:', debugging);
+        }
+
+        var s = document.createElement('script');
+        if (debugging === "true"){
+
+            var sre = document.createElement('script');
+            sre.setAttribute('src','//console.re/connector.js');
+            sre.setAttribute('data-channel','adams_picker_2016_03_22_12_20');
+            sre.setAttribute('id','consolerescript');
+            document.head.appendChild(sre);
+
+            s.setAttribute('src','../libs/js/pickerResultInterface/pickerResultInterface_debug.js');
+        }
+        else{
+            s.setAttribute('src','../libs/js/pickerResultInterface/pickerResultInterface.min.js');
+        }   
+        document.head.appendChild(s);
+    }());    
+
+
+    /**
      * Call Picker.sendResult
      */
     function save(meme, $btn){
 
         var fragments = [ {
-                "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.html",
+                "fragmentURI": "http://sofa.zdf.de/dummy",
                 "playout": "web"
             }, {
                 "fragmentURI": "http://date.jsontest.com",
                 "playout": "json"
             }, {
-                "fragmentURI": "http://sofa01.zdf.de/c/twr/132d86f9ac9b25f508db467e431a2e079d648b6d/embedm.xml",
+                "fragmentURI": "http://sofa.zdf.de/dummy",
                 "playout": "xml"
             }, {
-                "fragmentContent": "<head>...</head>",
+                "fragmentContent": "head...head",
                 "fragmentURI": "http://date.jsontest.com",
                 "playout": "head"
             }],
 
             content = {
-                "id"          : false, //generate new
+                "id"          : "", // use extId or fallback to new UUID
                 "description" : "Beschreibungstext1",
                 "visibleFrom" : "2016-03-21T00:00:00+01:00",
                 "visibleTo"   : "2016-11-24T00:00:00+01:00",
@@ -86,7 +114,7 @@ $( document ).ready(function() {
 
             timeout = setTimeout(function () {
                 $btn.button('reset');
-                console.re.log("Data not saved. Request timed out.");
+                console.re && console.re.log("Data not saved. Request timed out.");
                 bootstrapAlert("Data not saved. Request timed out.","alert-danger");
             }, 2000);
 
@@ -96,12 +124,12 @@ $( document ).ready(function() {
                 $btn.button('reset');
 
                 if (!err) {
-                    console.re.log("data saved");
+                    console.re && console.re.log("data saved");
                     bootstrapAlert("Success","alert-success");
                 } else {
                     bootstrapAlert("Data not saved. Check error log for details.","alert-danger");
                     console.log("Data not saved. erro:", err);
-                    console.re.log("Data not saved. erro:", err);
+                    console.re && console.re.log("Data not saved. erro:", err);
                 }
             });            
         } catch (error) {
@@ -139,7 +167,7 @@ $( document ).ready(function() {
                         selecteditem = $(memeitem);
                         selecteditem.addClass("active");
 
-                        console.re.log('meme selected:', JSON.stringify(m));
+                        console.re && console.re.log('meme selected:', JSON.stringify(m));
 
                         meme = m;
                         e.preventDefault();
