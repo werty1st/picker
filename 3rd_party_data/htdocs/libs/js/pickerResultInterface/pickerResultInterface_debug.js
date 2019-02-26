@@ -69,9 +69,9 @@ function IPickerResult() {
     if (locationEx.match(/extId=([^&]+)/i) !== null) {
         extId = unescape(locationEx.match(/extId=([^&]+)/i)[1]);
         if (console.re){
-            console.re.log('forceSSL:', forceSSL);
+            console.re.log('extId:', extId);
         } else {
-            console.log('forceSSL:', forceSSL);            
+            console.log('extId:', extId);            
         }
     }    
 
@@ -111,6 +111,11 @@ function IPickerResult() {
                 v = (c === 'x') ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         }
+        if (console.re){
+            console.re.log("Generating new UUID");
+        } else {
+            console.log("Generating new UUID");            
+        }            
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, repl);
     }
 
